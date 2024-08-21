@@ -1,0 +1,13 @@
+<!-- res/drawable/button_background.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/them_color"/> <!-- Purple color -->
+            <corners android:radius="25dp"/> <!-- Rounded corners -->
+            <padding android:left="16dp"
+                android:top="10dp"
+                android:right="16dp"
+                android:bottom="10dp"/>
+        </shape>
+    </item>
+</selector>

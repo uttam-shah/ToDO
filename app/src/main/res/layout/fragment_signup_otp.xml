@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.todo.login_reg.view_models.SignupViewModel" />
+    </data>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login_reg.SignupOtpFragment">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:src="@drawable/enter_otp"
+        />
+    <TextView
+        android:id="@+id/login_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter OTP"
+        android:textColor="@color/black"
+        android:layout_below="@id/image"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="22dp"/>
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A 4-digit One-Time Password (OTP) has been sent to your
+registered mobile number/email. Please enter the OTP below
+ to verify your identity and complete the process."
+        android:layout_below="@id/login_txt"
+        android:layout_marginLeft="22dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text2"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="22dp"
+        android:gravity="center">
+
+        <com.chaos.view.PinView
+            android:id="@+id/otp"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:inputType="number"
+            android:textSize="20sp"
+            app:itemRadius="10dp"
+            app:itemCount="6"
+            app:itemSpacing="6dp"
+            app:itemBackground="@drawable/btn_bg_2"
+            style="@style/PinWidget.PinView" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rec_password"
+            android:background="@drawable/button_bg"
+            android:text="Verify otp"
+            android:textStyle="bold"
+            android:layout_margin="22dp"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</RelativeLayout>
+</layout>

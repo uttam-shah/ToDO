@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.todo.login_reg.view_models.StartViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/home_page"
+        tools:context=".login_reg.view.StartActivity"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="The secret of getting ahead is getting started"
+            android:textSize="50dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginTop="100dp"
+            android:layout_margin="18dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="22dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_bg"
+                android:text="Login"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:onClick="@{() -> viewModel.onLoginClicked()}" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_bg"
+                android:text="Sign Up"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginTop="13dp"
+                android:onClick="@{() -> viewModel.onSignupClicked()}" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/cw_signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_bg"
+                android:text="Continue Without Sign Up"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginTop="13dp"
+                android:onClick="@{() -> viewModel.onContinueWithoutSignupClicked()}" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

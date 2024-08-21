@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.todo.login_reg.view_models.SignupViewModel" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".login_reg.Signup2Fragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginTop="12dp">
+            <RelativeLayout
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
+
+                <!-- Add icon positioned in the top right corner -->
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgUser"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/user_photo" />
+
+                <ImageView
+                    android:id="@+id/imgAdd"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/add" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text2"
+                android:layout_marginTop="22dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/email" />
+
+                <EditText
+                    android:id="@+id/editt_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone Number"
+                    android:layout_marginStart="10dp"
+                    android:text="@={viewModel.phone}"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text2"
+                android:layout_marginTop="12dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/email" />
+
+                <EditText
+                    android:id="@+id/editt_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email ID"
+                    android:layout_marginStart="10dp"
+                    android:text="@={viewModel.email}"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="22dp"
+            android:layout_alignParentBottom="true">
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rec_password"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/button_bg"
+                android:text="Sign up"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:onClick="@{() -> viewModel.onSignupClick(context)}"/>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

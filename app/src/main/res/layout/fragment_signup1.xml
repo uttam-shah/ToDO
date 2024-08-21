@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.todo.login_reg.view_models.SignupViewModel" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".login_reg.Signup1Fragment">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/register"
+            />
+        <TextView
+            android:id="@+id/login_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign up"
+            android:textColor="@color/black"
+            android:layout_below="@id/image"
+            android:textSize="50dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="22dp"/>
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Join us and take the first step towards a more organized life."
+            android:layout_below="@id/login_txt"
+            android:layout_marginLeft="22dp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/text2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text2"
+                    android:orientation="vertical"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginEnd="22dp">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_google"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:background="@drawable/button_bg"
+                        android:backgroundTint="#BAC5C7"
+                        android:gravity="center_vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/google_logo"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/google_logo"
+                                android:layout_marginStart="30dp"
+                                android:adjustViewBounds="true" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:text="Login with Google"
+                                android:textSize="20dp"
+                                android:textColor="@color/black"
+                                android:layout_marginStart="5dp"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"
+                            android:background="#000000" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:text="OR"
+                            android:textColor="#000000"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"
+                            android:background="#000000" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/text2">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="45dp"
+                            android:src="@drawable/email" />
+
+                        <EditText
+                            android:id="@+id/editt_full_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Full Name"
+                            android:layout_marginStart="10dp"
+                            android:text="@={viewModel.userInfo.fullName}"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rec_email"
+                        android:layout_marginTop="8dp">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="45dp"
+                            android:src="@drawable/lock" />
+
+                        <EditText
+                            android:id="@+id/editt_gender"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Gender"
+                            android:layout_marginStart="10dp"
+                            android:text="@={viewModel.userInfo.gender}"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rec_email"
+                        android:layout_marginTop="8dp">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="45dp"
+                            android:src="@drawable/lock" />
+
+                        <EditText
+                            android:id="@+id/editt_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Password"
+                            android:layout_marginStart="10dp"
+                            android:text="@={viewModel.password}"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rec_email"
+                        android:layout_marginTop="8dp">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="45dp"
+                            android:src="@drawable/lock" />
+
+                        <EditText
+                            android:id="@+id/editt_conf_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Conform Password"
+                            android:layout_marginStart="10dp"
+                            android:text="@={viewModel.confPassword}"/>
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rec_password"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/button_bg"
+                        android:text="next"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:onClick="@{(it) -> viewModel.onNextClick(it)}"/>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+</layout>
