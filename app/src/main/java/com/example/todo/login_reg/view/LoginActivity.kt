@@ -29,12 +29,12 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
-        loginViewModel.processLogin.observe(this){ shouldNavigate ->
-            if (shouldNavigate){
-                processLoginProecss()
-                loginViewModel.onProcessLogin()
-            }
-        }
+//        loginViewModel.processLogin.observe(this){ shouldNavigate ->
+//            if (shouldNavigate){
+//                processLoginProecss()
+//                loginViewModel.onProcessLogin()
+//            }
+//        }
     }
 
     private fun processLoginProecss() {

@@ -1,16 +1,28 @@
 package com.example.todo.login_reg.view_models
 
+
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.Navigation
+import com.example.todo.DashboardActivity
 import com.example.todo.R
+import com.example.todo.login_reg.NavigationHandler
+import com.example.todo.login_reg.Signup2Fragment
 import com.example.todo.login_reg.models.UserInfo
+import com.example.todo.login_reg.view.SignupActivity
 import com.example.todo.retrofit.ApiSet
 import com.example.todo.retrofit.RetrofitController
 import com.example.todo.retrofit.response.RegisterResponse
+import com.example.todo.room_db.BgThread
+import com.example.todo.room_db.User
+import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.firebase.storage.FirebaseStorage
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,8 +37,39 @@ class SignupViewModel : ViewModel() {
     val confPassword = MutableLiveData<String>()
     val phone = MutableLiveData<String>()
     val email = MutableLiveData<String>()
+    val imageUri = MutableLiveData<Uri?>()
+//    private var imagePickerLauncher: ActivityResultLauncher<Intent>? = null
 
     private val apiService: ApiSet = RetrofitController.getInstance().getApiService()
+
+    private var navigationHandler: NavigationHandler? = null
+
+    fun setNavigationHandler(handler: SignupActivity) {
+        this.navigationHandler = handler
+    }
+
+
+    private fun uploadImageToFirebase(context: Context) {
+        val uri = imageUri.value ?: return
+        val storageRef = FirebaseStorage.getInstance().reference.child("user_images/${uri.lastPathSegment}")
+        storageRef.putFile(uri)
+            .addOnSuccessListener {
+                storageRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                    downloadUri?.let {
+                        userInfo.value?.profileUrl = it.toString()
+                        Toast.makeText(context, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
+
+                        // Proceed with the registration process
+                        signupProcess(context)
+                    } ?: run {
+                        Toast.makeText(context, "Failed to retrieve download URL", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Image upload failed", Toast.LENGTH_SHORT).show()
+            }
+    }
 
     fun onSignupClick(context: Context) {
 
@@ -43,8 +86,10 @@ class SignupViewModel : ViewModel() {
             return
         }
 
+        uploadImageToFirebase(context)
+
         // Proceed with the registration process
-        signupProcess(context)
+       //signupProcess(context)
     }
 
     private fun signupProcess(context: Context) {
@@ -61,14 +106,24 @@ class SignupViewModel : ViewModel() {
             val password = password.value ?: ""
             val profileImage = it.profileUrl ?: ""
 
-            apiService.registerUser(name, email, phone, password, profileImage.toString())
+            apiService.registerUser(name, email, phone, password, profileImage)
                 .enqueue(object : Callback<RegisterResponse> {
                     override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
                         if (response.isSuccessful) {
                             Toast.makeText(context, response.body()?.message ?: "Registration successful", Toast.LENGTH_SHORT).show()
-                            // Navigate to the next screen if needed
-//                            val navController = Navigation.findNavController(context as View)
-//                            navController.navigate(R.id.navigation_signup2) // Replace with the correct action ID
+                            val intent = Intent(context, DashboardActivity::class.java)
+                            context.startActivity(intent)
+                            if (context is Activity) {
+                                context.finish()
+                            }
+
+                            //Store data in room database
+                            val user = response.body()?.user
+                            val bgThread = BgThread(context)
+                            if (user != null) {
+                                bgThread.performInsert(user)
+                            }
+
                         } else {
                             Toast.makeText(context, "Registration failed. Please try again.", Toast.LENGTH_SHORT).show()
                         }
@@ -84,21 +139,31 @@ class SignupViewModel : ViewModel() {
     }
 
     fun onNextClick(view: View) {
-        // Check if password and confirm password match
-        if (password.value != confPassword.value) {
-            Toast.makeText(view.context, "Passwords do not match", Toast.LENGTH_SHORT).show()
-            return
-        }
+        val user = userInfo.value
+        val context = view.context
 
-        // Retrieve the userInfo object and display the fullName
-        userInfo.value?.let {
-            Toast.makeText(view.context, it.fullName, Toast.LENGTH_SHORT).show()
-        } ?: run {
-            Toast.makeText(view.context, "User information is missing", Toast.LENGTH_SHORT).show()
-        }
+        when {
+            user?.fullName.isNullOrEmpty() || user?.gender.isNullOrEmpty() || password.value.isNullOrEmpty() || confPassword.value.isNullOrEmpty() -> {
+                Toast.makeText(context, "Please Fill add the details", Toast.LENGTH_SHORT).show()
+            }
 
-        // Navigate to the next fragment
-        val navController = Navigation.findNavController(view)
-        navController.navigate(R.id.navigation_signup2) // Replace with the correct action ID
+            !(password.value == confPassword.value) -> {
+                Toast.makeText(context, "Password Did not Match", Toast.LENGTH_SHORT).show()
+            }
+
+            else -> {
+                // Navigate to the next fragment
+                navigationHandler?.navigateToFragment(R.id.navigation_signup2) // Replace with your actual fragment ID
+
+            }
+        }
     }
+
+
+    fun setImageUri(uri: Uri?) {
+        imageUri.value = uri
+    }
+
+
+
 }
