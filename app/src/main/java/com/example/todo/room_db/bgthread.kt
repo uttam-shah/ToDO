@@ -13,17 +13,18 @@ class BgThread(
     }
 
     private lateinit var operationType: OperationType
-    private var user: User? = null
+    private var user: UserRoom? = null
 
     // Function to perform insert operation
-    fun performInsert(user: User) {
+    fun performInsert(user: UserRoom) {
         this.operationType = OperationType.INSERT
         this.user = user
+
         start()
     }
 
     // Function to perform delete operation
-    fun performDelete(user: User) {
+    fun performDelete(user: UserRoom) {
         this.operationType = OperationType.DELETE
         this.user = user
         start()

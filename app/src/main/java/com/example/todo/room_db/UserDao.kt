@@ -3,23 +3,23 @@ package com.example.todo.room_db
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
 interface UserDao {
     @Query("SELECT * FROM users")
-    fun getAll(): List<User>
+    fun getAll(): List<UserRoom>
 
-//    @Query("SELECT * FROM users WHERE uid IN (:userIds)")
-//    fun loadAllByIds(userIds: IntArray): List<User>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUser(userRoom: UserRoom)
 
-//    @Query("SELECT * FROM users WHERE first_name LIKE :first AND " +
-//            "last_name LIKE :last LIMIT 1")
-//    fun findByName(first: String, last: String): User
+    @Query("SELECT * FROM users LIMIT 1")
+    suspend fun getUser(): UserRoom?
 
     @Insert
-    fun insertAll(vararg users: User)
+    fun insertAll(vararg users: UserRoom)
 
     @Delete
-    fun delete(user: User)
+    fun delete(user: UserRoom)
 }

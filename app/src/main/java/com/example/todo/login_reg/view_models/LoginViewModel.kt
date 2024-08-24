@@ -5,17 +5,16 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.room.RoomDatabase
 import com.example.todo.DashboardActivity
+import com.example.todo.login_reg.models.User
 import com.example.todo.login_reg.view.SignupActivity
 import com.example.todo.retrofit.ApiSet
 import com.example.todo.retrofit.RetrofitController
 import com.example.todo.retrofit.response.LoginResponse
 import com.example.todo.room_db.BgThread
-import com.example.todo.room_db.User
+import com.example.todo.room_db.UserRoom
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,11 +32,14 @@ class LoginViewModel: ViewModel(){
              .enqueue(object : Callback<LoginResponse>{
                  override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                      if (response.isSuccessful){
-                         //Store data in room database
-                         val user  = response.body()?.user
+
+                         // In your response handling code:
+                         val user = response.body()?.user
                          val bgThread = BgThread(context)
                          if (user != null) {
-                             bgThread.performInsert(user)
+                             // Convert User to UserRoom and insert it into the database
+                             val userRoom = convertToUserRoom(user)
+                             bgThread.performInsert(userRoom)
                          }
                          Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT).show()
                          val intent = Intent(context, DashboardActivity::class.java)
@@ -66,6 +68,19 @@ class LoginViewModel: ViewModel(){
     fun onRegisterClick(context: Context){
         val intent = Intent(context, SignupActivity::class.java)
         context.startActivity(intent)
+    }
+
+    // Convert User (API response) to UserRoom (Room database entity)
+    fun convertToUserRoom(user: User): UserRoom {
+        return UserRoom(
+            userId = user.userId,
+            name = user.name,
+            email = user.email,
+            phone = user.phone,
+            profileImage = user.profileImage,
+            createdAt = user.createdAt,
+            isLogIn = true  // Set isLogIn to true when storing in Room database
+        )
     }
 
 }

@@ -1,6 +1,6 @@
 package com.example.todo.retrofit.response
 
-import com.example.todo.room_db.User
+import com.example.todo.login_reg.models.User
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
